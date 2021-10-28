@@ -1,3 +1,51 @@
+import axios from 'axios';
+
+const myUsername = 'Role4Initiative';
+const cardsDiv = document.querySelector('.cards');
+
+axios.get(`https://api.github.com/users/${myUsername}`)
+.then(axiosData => {
+    console.log(axiosData)
+  })
+  .catch(error => {
+    console.error(error)
+  })
+
+function profileCardMaker(githubInfo) {
+  const card = document.createElement('div');
+  const userImg = document.createElement('img');
+  const cardInfo = document.createElement('div');
+  const userName = document.createElement('h3');
+  const userUsername = document.createElement('p');
+  const userLocation = document.createElement('p');
+  const userProfile = document.createElement('p');
+  const userFollowers = document.createElement('p');
+  const userFollowing = document.createElement('p');
+  const userBio = document.createElement('p');
+
+  card.appendChild(userImg);
+  card.appendChild(cardInfo);
+  cardInfo.appendChild(userName);
+  cardInfo.appendChild(userUsername);
+  cardInfo.appendChild(userLocation);
+  cardInfo.appendChild(userProfile);
+  cardInfo.appendChild(userFollowers);
+  cardInfo.appendChild(userFollowing);
+  cardInfo.appendChild(userBio);
+
+  card.classList.add('card');
+  cardInfo.classList.add('card-info');
+  userName.classList.add('name');
+  userUsername.classList.add('username');
+
+  userImg.src = axiosData.avatar_url;
+
+  return card;
+}
+
+profileCardMaker(axiosData.data)
+
+
 /*
   STEP 1: using axios, send a GET request to the following URL
     (replacing the placeholder with your Github name):
@@ -8,13 +56,33 @@
   STEP 2: Inspect and study the data coming back, this is YOUR
     github info! You will need to understand the structure of this
     data in order to use it to build your component function
-
+    
     Skip to STEP 3 (line 34).
-*/
+    */
+   
+   /*
+     STEP 3: Create a function that accepts a single object as its only argument.
+       Using DOM methods and properties, create and return the following markup:
+   
+       <div class="card">
+         <img src={image url of user} />
+         <div class="card-info">
+           <h3 class="name">{users name}</h3>
+           <p class="username">{users user name}</p>
+           <p>Location: {users location}</p>
+           <p>Profile:
+             <a href={address to users github page}>{address to users github page}</a>
+           </p>
+           <p>Followers: {users followers count}</p>
+           <p>Following: {users following count}</p>
+           <p>Bio: {users bio}</p>
+         </div>
+       </div>
+   */
 
 /*
-  STEP 4: Pass the data received from Github into your function,
-    and append the returned markup to the DOM as a child of .cards
+STEP 4: Pass the data received from Github into your function,
+and append the returned markup to the DOM as a child of .cards
 */
 
 /*
@@ -30,25 +98,6 @@
 
 const followersArray = [];
 
-/*
-  STEP 3: Create a function that accepts a single object as its only argument.
-    Using DOM methods and properties, create and return the following markup:
-
-    <div class="card">
-      <img src={image url of user} />
-      <div class="card-info">
-        <h3 class="name">{users name}</h3>
-        <p class="username">{users user name}</p>
-        <p>Location: {users location}</p>
-        <p>Profile:
-          <a href={address to users github page}>{address to users github page}</a>
-        </p>
-        <p>Followers: {users followers count}</p>
-        <p>Following: {users following count}</p>
-        <p>Bio: {users bio}</p>
-      </div>
-    </div>
-*/
 
 /*
   List of LS Instructors Github username's:
