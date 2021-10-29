@@ -3,49 +3,66 @@ import axios from 'axios';
 const myUsername = 'Role4Initiative';
 const cardsDiv = document.querySelector('.cards');
 
-axios.get(`https://api.github.com/users/${myUsername}`)
-.then(axiosData => {
-    console.log(axiosData)
-  })
-  .catch(error => {
-    console.error(error)
-  })
+// axios.get(`https://api.github.com/users/${myUsername}`)
+// .then(axiosData => {
+//     console.log(axiosData)
+//   })
+//   .catch(error => {
+//     console.error(error)
+//   })
 
 function profileCardMaker(githubInfo) {
-  const card = document.createElement('div');
+  const userCard = document.createElement('div');
   const userImg = document.createElement('img');
   const cardInfo = document.createElement('div');
   const userName = document.createElement('h3');
   const userUsername = document.createElement('p');
   const userLocation = document.createElement('p');
   const userProfile = document.createElement('p');
+  const userProfileAtag = document.createElement('a');
   const userFollowers = document.createElement('p');
   const userFollowing = document.createElement('p');
   const userBio = document.createElement('p');
-
-  card.appendChild(userImg);
-  card.appendChild(cardInfo);
+  
+  userCard.appendChild(userImg);
+  userCard.appendChild(cardInfo);
   cardInfo.appendChild(userName);
   cardInfo.appendChild(userUsername);
   cardInfo.appendChild(userLocation);
   cardInfo.appendChild(userProfile);
+  userProfile.appendChild(userProfileAtag);
   cardInfo.appendChild(userFollowers);
   cardInfo.appendChild(userFollowing);
   cardInfo.appendChild(userBio);
 
-  card.classList.add('card');
+  userCard.classList.add('card');
   cardInfo.classList.add('card-info');
   userName.classList.add('name');
   userUsername.classList.add('username');
+  
+  axios.get(`https://api.github.com/users/${myUsername}`)
+  .then(axiosData => {
+    console.log(axiosData)
+    userImg.src = axiosData.data.avatar_url;
+    userName.textContent = 'Name: ' + axiosData.data.name;
+    userUsername.textContent = 'Username: ' + axiosData.data.login;
+    userLocation.textContent = 'Location: ' + axiosData.data.location;
+    userProfileAtag.innerHTML = axiosData.data.html_url;
+    userProfileAtag.href = `${axiosData.data.html_url}`;
+    userProfile.innerHTML = 'Profile: ' + userProfileAtag.outerHTML;
+    userFollowers.textContent = 'Followers: ' + axiosData.data.followers;
+    userFollowing.textContent = 'Following: ' + axiosData.data.following;
+    userBio.textContent = 'Bio: ' + axiosData.data.bio;
 
-  userImg.src = axiosData.avatar_url;
-
-  return card;
+  })
+  .catch(error => {
+    console.error(error)
+  })
+  
+  return userCard;
 }
 
-profileCardMaker(axiosData.data)
-
-
+cardsDiv.appendChild(profileCardMaker('userCard'))
 /*
   STEP 1: using axios, send a GET request to the following URL
     (replacing the placeholder with your Github name):
@@ -96,7 +113,14 @@ and append the returned markup to the DOM as a child of .cards
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = [
+  'tetondan',
+  'dustinmyers',
+  'justsml',
+  'luishrd',
+  'bigknell'
+];
+
 
 
 /*
